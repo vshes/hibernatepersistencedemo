@@ -1,0 +1,2 @@
+com.shesh.db.model.Student.class
+com.shesh.db.model.Course.class

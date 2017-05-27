@@ -14,13 +14,13 @@ import java.util.logging.Logger;
 /**
  * Created by shesh on 5/23/17.
  */
-public class StudentDaoImpl implements StudentDao {
+public class StudentDaoEntityMangerImpl implements StudentDao {
     private  EntityManagerFactory emf ;
     private Logger logger ;
     private EntityManager em;
 
-    public StudentDaoImpl() throws IOException {
-        Properties prop = DbUtil.getProp();
+    public StudentDaoEntityMangerImpl() throws IOException {
+        Properties prop = DbUtil.getProp("emf.properties");
         emf = Persistence.createEntityManagerFactory("dbdemo", prop);
         this.logger = Logger.getLogger("DAO");
     }

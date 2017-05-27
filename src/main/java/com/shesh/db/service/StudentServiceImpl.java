@@ -1,7 +1,8 @@
 package com.shesh.db.service;
 
 import com.shesh.db.dao.StudentDao;
-import com.shesh.db.dao.StudentDaoImpl;
+import com.shesh.db.dao.StudentDaoEntityMangerImpl;
+import com.shesh.db.dao.StudentDaoSessionFactoryImpl;
 import com.shesh.db.model.Student;
 import org.jboss.logging.Logger;
 
@@ -16,8 +17,12 @@ public class StudentServiceImpl implements  StudentService{
 
     private StudentDao studentDao;
 
-    public StudentServiceImpl() throws IOException {
-        this.studentDao = new StudentDaoImpl();
+    public StudentServiceImpl(String type) throws Exception {
+
+        if(type.equals("entity"))
+        this.studentDao = new StudentDaoEntityMangerImpl();
+        else
+        this.studentDao = new StudentDaoSessionFactoryImpl();
     }
     public Student findOne(String id) {
 

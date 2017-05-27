@@ -3,10 +3,12 @@ package com.shesh.db.main;
 import com.shesh.db.model.Student;
 import com.shesh.db.service.StudentService;
 import com.shesh.db.service.StudentServiceImpl;
+import com.shesh.db.utils.DbUtil;
 import com.shesh.db.utils.GenerateData;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
@@ -15,11 +17,26 @@ import java.util.logging.Logger;
  */
 public class DatabaseStarter {
     public static void main(String[] args) throws Exception {
+        Logger logger = Logger.getLogger("MainLogger");
+        String l ="new";
+
+        StudentService studentService = null;
+        Properties genericProps = DbUtil.getProp("generic.properties");
+        if(genericProps.getProperty("hibernatetype").equals("entity")){
+           studentService = new StudentServiceImpl("entity");
+
+        }
+        else{
+             studentService = new StudentServiceImpl("session");
+        }
 
         GenerateData<Student> gen = new GenerateData<Student>(new Student());
         List<Student> studentList = gen.checkInstance();
-        StudentService studentService = new StudentServiceImpl();
+
         for(Student student : studentList)studentService.create(student);
+
+        logger.info("Created sample data");
+
 
         Scanner scanner = new Scanner(System.in);
         String choice = "0";
