@@ -35,7 +35,7 @@ public class StudentDaoSessionFactoryImpl implements  StudentDao{
     }
 
     public List<Student> findAll() {
-        Session session = sessionFactory.openSession()1;
+        Session session = sessionFactory.openSession();
         Query query = session.createQuery("select s from Student s");
         List<Student> resultList = query.getResultList();
         session.close();
