@@ -2,13 +2,14 @@ package com.shesh.db.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.UUID;
 
 /**
  * Created by shesh on 5/23/17.
  */
 @Entity
-public class Course {
+public class Course implements Serializable{
 
     @Id
     private String courseId;

@@ -7,7 +7,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,11 +17,10 @@ public class StudentDaoSessionFactoryImpl implements  StudentDao{
 
     private SessionFactory sessionFactory;
     public StudentDaoSessionFactoryImpl() throws Exception {
-        Configuration cfg = new Configuration();
-        cfg.addProperties(DbUtil.getProp("sf.properties"));
-       cfg.configure("hibernate.cfg.xml");
-        cfg.addAnnotatedClass(Student.class);
-        this.sessionFactory = cfg.buildSessionFactory();
+        sessionFactory  = new Configuration().addProperties(DbUtil.getProp("sf.properties"))
+                .configure("hibernate.cfg.xml")
+                .buildSessionFactory();
+
         System.out.println("Hibernate Configured Using Session !");
 
     }
@@ -37,7 +35,11 @@ public class StudentDaoSessionFactoryImpl implements  StudentDao{
     }
 
     public List<Student> findAll() {
-        return sessionFactory.openSession().createQuery("select s from Student s").getResultList();
+        Session session = sessionFactory.openSession()1;
+        Query query = session.createQuery("select s from Student s");
+        List<Student> resultList = query.getResultList();
+        session.close();
+        return resultList;
 
     }
 
@@ -61,11 +63,12 @@ public class StudentDaoSessionFactoryImpl implements  StudentDao{
     }
 
     public Student create(Student student) {
-
+        System.out.println("Creating Object using SessionFactory !");
         Session session = sessionFactory.openSession();
                 session.beginTransaction();
                 session.save(student);
                 session.getTransaction().commit();
+
         return student;
     }
 
